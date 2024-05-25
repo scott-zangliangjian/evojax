@@ -172,14 +172,8 @@ class Trainer(object):
 
                 if i > 0 and i % self._test_interval == 0:
                     best_params = self.solver.best_params
-                    test_scores, _ = self.sim_mgr.eval_params(
-                        params=best_params, test=True)
-                    self._logger.info(
-                        '[TEST] Iter={0}, #tests={1}, max={2:.4f}, avg={3:.4f}, '
-                        'min={4:.4f}, std={5:.4f}'.format(
-                            i, test_scores.size, test_scores.max(),
-                            test_scores.mean(), test_scores.min(),
-                            test_scores.std()))
+                    test_scores, _ = self.sim_mgr.eval_params(params=best_params, test=True)
+                    #self._logger.info('[TEST] Iter={0}, #tests={1}, max={2:.4f}, avg={3:.4f}, min={4:.4f}, std={5:.4f}'.format(i, test_scores.size, test_scores.max(), test_scores.mean(), test_scores.min(), test_scores.std()))
                     self._log_scores_fn(i, test_scores, "test")
                     mean_test_score = test_scores.mean()
                     save_model(
@@ -193,13 +187,8 @@ class Trainer(object):
 
             # Test and save the final model.
             best_params = self.solver.best_params
-            test_scores, _ = self.sim_mgr.eval_params(
-                params=best_params, test=True)
-            self._logger.info(
-                '[TEST] Iter={0}, #tests={1}, max={2:.4f}, avg={3:.4f}, '
-                'min={4:.4f}, std={5:.4f}'.format(
-                    self._max_iter, test_scores.size, test_scores.max(),
-                    test_scores.mean(), test_scores.min(), test_scores.std()))
+            test_scores, _ = self.sim_mgr.eval_params(params=best_params, test=True)
+            #self._logger.info('[TEST] Iter={0}, #tests={1}, max={2:.4f}, avg={3:.4f}, min={4:.4f}, std={5:.4f}'.format(self._max_iter, test_scores.size, test_scores.max(), test_scores.mean(), test_scores.min(), test_scores.std()))
             mean_test_score = test_scores.mean()
             save_model(
                 model_dir=self._log_dir,
