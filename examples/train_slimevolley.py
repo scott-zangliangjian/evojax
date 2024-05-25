@@ -78,20 +78,10 @@ def main(config):
 
     max_steps = 3000
     train_task = SlimeVolley(test=False, max_steps=max_steps)
-    test_task = SlimeVolley(test=True, max_steps=max_steps)
-    policy = MLPPolicy(
-        input_dim=train_task.obs_shape[0],
-        hidden_dims=[config.hidden_size, ],
-        output_dim=train_task.act_shape[0],
-        output_act_fn='tanh',
-    )
-    solver = CMA(
-        pop_size=config.pop_size,
-        param_size=policy.num_params,
-        init_stdev=config.init_std,
-        seed=config.seed,
-        logger=logger,
-    )
+    test_task  = SlimeVolley(test=True,  max_steps=max_steps)
+    policy = MLPPolicy(input_dim=train_task.obs_shape[0], hidden_dims=[config.hidden_size, ], output_dim=train_task.act_shape[0], output_act_fn='tanh', )
+    solver = CMA(pop_size=config.pop_size, param_size=policy.num_params, init_stdev=config.init_std, seed=config.seed, logger=logger, )
+
     # Train.
     trainer = Trainer(
         policy=policy,
