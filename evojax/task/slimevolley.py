@@ -884,7 +884,7 @@ class SlimeVolley(VectorizedTask):
             steps = jnp.where(done, jnp.zeros((), jnp.int32), steps)
             return State(game_state=cur_state, obs=obs,
                          steps=steps, key=next_key), reward, done
-        self._step_fn = jax.jit(jax.vmap(step_fn))
+        self._step_fn = jax.vmap(step_fn) #jax.jit(jax.vmap(step_fn))
 
     def reset(self, key: jnp.ndarray) -> State:
         return self._reset_fn(key)

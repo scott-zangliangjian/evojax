@@ -126,10 +126,10 @@ def main(config):
     trainer.run(demo_mode=True)
 
     # Visualize the policy.
-    task_reset_fn = jax.jit(test_task.reset)
-    policy_reset_fn = jax.jit(policy.reset)
-    step_fn = jax.jit(test_task.step)
-    action_fn = jax.jit(policy.get_actions)
+    task_reset_fn   = test_task.reset    #jax.jit(test_task.reset)
+    step_fn         = test_task.step     #jax.jit(test_task.step)
+    policy_reset_fn = policy.reset       #jax.jit(policy.reset)
+    action_fn       = policy.get_actions #jax.jit(policy.get_actions)
     best_params = trainer.solver.best_params[None, :]
     key = jax.random.PRNGKey(0)[None, :]
 
