@@ -81,13 +81,13 @@ def main(config):
     train_task = SlimeVolley(test=False, max_steps=max_steps)
     test_task  = SlimeVolley(test=True,  max_steps=max_steps)
     match config.police_type:
-        case 'MLP':  policy = MLPPolicy(input_dim=train_task.obs_shape[0], hidden_dims=[config.hidden_size, ], output_dim=train_task.act_shape[0], output_act_fn='tanh', )
-        case 'NEAT': policy = MLPPolicy(input_dim=train_task.obs_shape[0], hidden_dims=[config.hidden_size, ], output_dim=train_task.act_shape[0], output_act_fn='tanh', )
+        case 'MLP':  policy =  MLPPolicy(input_dim=train_task.obs_shape[0], hidden_dims=[config.hidden_size, ], output_dim=train_task.act_shape[0], output_act_fn='tanh', )
+        case 'NEAT': policy = NEATPolicy(input_dim=train_task.obs_shape[0], hidden_dims=[config.hidden_size, ], output_dim=train_task.act_shape[0], output_act_fn='tanh', )
         case _:      sys.exit("unsupported policy type: {}".format(config.police_type))
 
     match config.police_type:
-        case 'MLP':  solver = CMA(pop_size=config.pop_size, param_size=policy.num_params, init_stdev=config.init_std, seed=config.seed, logger=logger, )
-        case 'NEAT': solver = CMA(pop_size=config.pop_size, param_size=policy.num_params, init_stdev=config.init_std, seed=config.seed, logger=logger, )
+        case 'MLP':  solver =           CMA(pop_size=config.pop_size, param_size=policy.num_params, init_stdev=config.init_std, seed=config.seed, logger=logger, )
+        case 'NEAT': solver = NEATAlgorithm(pop_size=config.pop_size, param_size=policy.num_params, init_stdev=config.init_std, seed=config.seed, logger=logger, )
         case _:      sys.exit("unsupported policy type: {}".format(config.police_type))    
 
     # Train.
