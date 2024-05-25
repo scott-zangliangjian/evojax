@@ -158,16 +158,11 @@ class Trainer(object):
                 if isinstance(self.solver, QualityDiversityMethod):
                     self.solver.observe_bd(bds)
                 self.solver.tell(fitness=scores)
-                self._logger.debug('solver.tell time: {0:.4f}s'.format(
-                    time.perf_counter() - start_time))
+                self._logger.debug('solver.tell time: {0:.4f}s'.format(time.perf_counter() - start_time))
 
                 if i > 0 and i % self._log_interval == 0:
                     scores = np.array(scores)
-                    self._logger.info(
-                        'Iter={0:3d}, size={1}, max={2:+8.4f}, '
-                        'avg={3:+8.4f}, min={4:+8.4f}, std={5:.4f}'.format(
-                            i, scores.size, scores.max(), scores.mean(),
-                            scores.min(), scores.std()))
+                    self._logger.info('       Iter={0:3d}, size={1}, max={2:+8.4f}, avg={3:+8.4f}, min={4:+8.4f}, std={5:.4f}'.format(i, scores.size, scores.max(), scores.mean(), scores.min(), scores.std()))
                     self._log_scores_fn(i, scores, "train")
 
                 if i > 0 and i % self._test_interval == 0:
