@@ -36,6 +36,7 @@ https://github.com/hardmaru/slimevolleygym
 Example command to run this script: `python train_slimevolley.py --gpu-id=0`
 """
 
+import sys
 import argparse
 import os
 import shutil
@@ -74,13 +75,20 @@ def main(config):
         name='SlimeVolley', log_dir=log_dir, debug=config.debug)
     logger.info('EvoJAX SlimeVolley')
     logger.info('=' * 30)
-    logger.info(config.police_type)
+    logger.info("Policy type: {}".format(config.police_type))
 
     max_steps = 3000
     train_task = SlimeVolley(test=False, max_steps=max_steps)
     test_task  = SlimeVolley(test=True,  max_steps=max_steps)
-    policy = MLPPolicy(input_dim=train_task.obs_shape[0], hidden_dims=[config.hidden_size, ], output_dim=train_task.act_shape[0], output_act_fn='tanh', )
-    solver = CMA(pop_size=config.pop_size, param_size=policy.num_params, init_stdev=config.init_std, seed=config.seed, logger=logger, )
+    match config.police_type:
+        case 'MLP':  policy = MLPPolicy(input_dim=train_task.obs_shape[0], hidden_dims=[config.hidden_size, ], output_dim=train_task.act_shape[0], output_act_fn='tanh', )
+        case 'NEAT': policy = MLPPolicy(input_dim=train_task.obs_shape[0], hidden_dims=[config.hidden_size, ], output_dim=train_task.act_shape[0], output_act_fn='tanh', )
+        case _:      sys.exit("unsupported policy type: {}".format(config.police_type))
+
+    match config.police_type:
+        case 'MLP':  solver = CMA(pop_size=config.pop_size, param_size=policy.num_params, init_stdev=config.init_std, seed=config.seed, logger=logger, )
+        case 'NEAT': solver = CMA(pop_size=config.pop_size, param_size=policy.num_params, init_stdev=config.init_std, seed=config.seed, logger=logger, )
+        case _:      sys.exit("unsupported policy type: {}".format(config.police_type))    
 
     # Train.
     trainer = Trainer(
