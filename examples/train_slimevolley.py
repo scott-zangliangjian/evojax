@@ -50,28 +50,17 @@ from evojax import util
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument(
-        '--pop-size', type=int, default=128, help='ES population size.')
-    parser.add_argument(
-        '--hidden-size', type=int, default=20, help='Policy hidden size.')
-    parser.add_argument(
-        '--num-tests', type=int, default=100, help='Number of test rollouts.')
-    parser.add_argument(
-        '--n-repeats', type=int, default=16, help='Training repetitions.')
-    parser.add_argument(
-        '--max-iter', type=int, default=500, help='Max training iterations.')
-    parser.add_argument(
-        '--test-interval', type=int, default=50, help='Test interval.')
-    parser.add_argument(
-        '--log-interval', type=int, default=10, help='Logging interval.')
-    parser.add_argument(
-        '--seed', type=int, default=123, help='Random seed for training.')
-    parser.add_argument(
-        '--init-std', type=float, default=0.5, help='Initial std.')
-    parser.add_argument(
-        '--gpu-id', type=str, help='GPU(s) to use.')
-    parser.add_argument(
-        '--debug', action='store_true', help='Debug mode.')
+    parser.add_argument('--pop-size',      type=int,   default=128, help='ES population size.')
+    parser.add_argument('--hidden-size',   type=int,   default=20,  help='Policy hidden size.')
+    parser.add_argument('--num-tests',     type=int,   default=100, help='Number of test rollouts.')
+    parser.add_argument('--n-repeats',     type=int,   default=16,  help='Training repetitions.')
+    parser.add_argument('--max-iter',      type=int,   default=500, help='Max training iterations.')
+    parser.add_argument('--test-interval', type=int,   default=50,  help='Test interval.')
+    parser.add_argument('--log-interval',  type=int,   default=10,  help='Logging interval.')
+    parser.add_argument('--seed',          type=int,   default=123, help='Random seed for training.')
+    parser.add_argument('--init-std',      type=float, default=0.5, help='Initial std.')
+    parser.add_argument('--gpu-id',        type=str,                help='GPU(s) to use.')
+    parser.add_argument('--debug',         action='store_true',     help='Debug mode.')
     config, _ = parser.parse_known_args()
     return config
 
