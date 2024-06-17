@@ -53,18 +53,15 @@ class MLPPolicy(PolicyNetwork):
                  output_dim: int,
                  output_act_fn: str = 'tanh',
                  logger: logging.Logger = None):
-        if logger is None:
-            self._logger = create_logger(name='MLPPolicy')
-        else:
-            self._logger = logger
+        if logger is None: self._logger = create_logger(name='MLPPolicy')
+        else:              self._logger = logger
 
-        model = MLP(
-            feat_dims=hidden_dims, out_dim=output_dim, out_fn=output_act_fn)
+        model = MLP(feat_dims=hidden_dims, out_dim=output_dim, out_fn=output_act_fn)
         params = model.init(random.PRNGKey(0), jnp.ones([1, input_dim]))
         self.num_params, format_params_fn = get_params_format_fn(params)
         self._logger.info('MLPPolicy.num_params = {}'.format(self.num_params))
         self._format_params_fn = jax.vmap(format_params_fn)
-        self._forward_fn = jax.vmap(model.apply)
+        self._forward_fn       = jax.vmap(model.apply)
 
     def get_actions(self,
                     t_states: TaskState,
