@@ -29,20 +29,20 @@ from evojax.util import get_params_format_fn
 
 class NodeGene:
     def __init__(self, node_id, node_type):
-        self.node_id = node_id
+        self.node_id   = node_id
         self.node_type = node_type
 
 class ConnectionGene:
     def __init__(self, innovation_number, from_node, to_node, weight, enabled=True):
         self.innovation_number = innovation_number
-        self.from_node = from_node
-        self.to_node = to_node
-        self.weight = weight
-        self.enabled = enabled
+        self.from_node         = from_node
+        self.to_node           = to_node
+        self.weight            = weight
+        self.enabled           = enabled
 
 class Genome:
     def __init__(self, nodes, connections):
-        self.nodes = nodes
+        self.nodes       = nodes
         self.connections = connections
 
 def initialize_population(population_size, input_dim, output_dim):
