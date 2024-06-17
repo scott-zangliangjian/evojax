@@ -136,19 +136,11 @@ class Trainer(object):
             best_score = -float('Inf')
 
             for i in range(self._max_iter):
-                start_time = time.perf_counter()
-                params = self.solver.ask()
-                self._logger.debug('solver.ask time: {0:.4f}s'.format(time.perf_counter() - start_time))
-
-                start_time = time.perf_counter()
-                scores, bds = self.sim_mgr.eval_params(params=params, test=False)
-                self._logger.debug('sim_mgr.eval_params time: {0:.4f}s'.format(time.perf_counter() - start_time))
-
-                start_time = time.perf_counter()
-                if isinstance(self.solver, QualityDiversityMethod):
-                    self.solver.observe_bd(bds)
-                self.solver.tell(fitness=scores)
-                self._logger.debug('solver.tell time: {0:.4f}s'.format(time.perf_counter() - start_time))
+                start_time = time.perf_counter(); params      = self.solver.ask();                                   self._logger.debug('solver.ask time:          {0:.4f}s'.format(time.perf_counter() - start_time))
+                start_time = time.perf_counter(); scores, bds = self.sim_mgr.eval_params(params=params, test=False); self._logger.debug('sim_mgr.eval_params time: {0:.4f}s'.format(time.perf_counter() - start_time))
+                start_time = time.perf_counter();               self.solver.tell(fitness=scores);                    self._logger.debug('solver.tell time:         {0:.4f}s'.format(time.perf_counter() - start_time))
+                #if isinstance(self.solver, QualityDiversityMethod):
+                #    self.solver.observe_bd(bds)
 
                 if i > 0 and i % self._log_interval == 0:
                     scores = np.array(scores)
