@@ -38,13 +38,9 @@ class MLP(nn.Module):
         for hidden_dim in self.feat_dims:
             x = nn.tanh(nn.Dense(hidden_dim)(x))
         x = nn.Dense(self.out_dim)(x)
-        if self.out_fn == 'tanh':
-            x = nn.tanh(x)
-        elif self.out_fn == 'softmax':
-            x = nn.softmax(x, axis=-1)
-        else:
-            raise ValueError(
-                'Unsupported output activation: {}'.format(self.out_fn))
+        if   self.out_fn == 'tanh':    x = nn.tanh(   x)
+        elif self.out_fn == 'softmax': x = nn.softmax(x, axis=-1)
+        else: raise ValueError('Unsupported output activation: {}'.format(self.out_fn))
         return x
 
 

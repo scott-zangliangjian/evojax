@@ -77,7 +77,7 @@ def main(config):
     logger.info('=' * 30)
     logger.info("Policy type: {}".format(config.police_type))
 
-    max_steps = 3000
+    max_steps = 30 # 3000
     train_task = SlimeVolley(test=False, max_steps=max_steps)
     test_task  = SlimeVolley(test=True,  max_steps=max_steps)
     match config.police_type:
