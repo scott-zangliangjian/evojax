@@ -116,25 +116,18 @@ class Trainer(object):
         if self.model_dir is not None:
             params, obs_params = load_model(model_dir=self.model_dir)
             self.sim_mgr.obs_params = obs_params
-            self._logger.info(
-                'Loaded model parameters from {}.'.format(self.model_dir))
+            self._logger.info('Loaded model parameters from {}.'.format(self.model_dir))
         else:
             params = None
 
         if demo_mode:
-            if params is None:
-                raise ValueError('No policy parameters to evaluate.')
+            if params is None: raise ValueError('No policy parameters to evaluate.')
             self._logger.info('Start to test the parameters.')
-            scores = np.array(
-                self.sim_mgr.eval_params(params=params, test=True)[0])
-            self._logger.info(
-                '[TEST] #tests={0}, max={1:.4f}, avg={2:.4f}, min={3:.4f}, '
-                'std={4:.4f}'.format(scores.size, scores.max(), scores.mean(),
-                                     scores.min(), scores.std()))
+            scores = np.array(self.sim_mgr.eval_params(params=params, test=True)[0])
+            self._logger.info('[TEST] #tests={0}, max={1:.4f}, avg={2:.4f}, min={3:.4f}, std={4:.4f}'.format(scores.size, scores.max(), scores.mean(), scores.min(), scores.std()))
             return scores.mean()
         else:
-            self._logger.info(
-                'Start to train for {} iterations.'.format(self._max_iter))
+            self._logger.info('Start to train for {} iterations.'.format(self._max_iter))
 
             if params is not None:
                 # Continue training from the breakpoint.
@@ -145,14 +138,11 @@ class Trainer(object):
             for i in range(self._max_iter):
                 start_time = time.perf_counter()
                 params = self.solver.ask()
-                self._logger.debug('solver.ask time: {0:.4f}s'.format(
-                    time.perf_counter() - start_time))
+                self._logger.debug('solver.ask time: {0:.4f}s'.format(time.perf_counter() - start_time))
 
                 start_time = time.perf_counter()
-                scores, bds = self.sim_mgr.eval_params(
-                    params=params, test=False)
-                self._logger.debug('sim_mgr.eval_params time: {0:.4f}s'.format(
-                    time.perf_counter() - start_time))
+                scores, bds = self.sim_mgr.eval_params(params=params, test=False)
+                self._logger.debug('sim_mgr.eval_params time: {0:.4f}s'.format(time.perf_counter() - start_time))
 
                 start_time = time.perf_counter()
                 if isinstance(self.solver, QualityDiversityMethod):
