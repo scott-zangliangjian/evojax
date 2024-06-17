@@ -126,13 +126,12 @@ def main(config):
     policy_state = policy_reset_fn(task_state)
     screens = []
     for _ in range(max_steps):
-        action, policy_state = action_fn(task_state, best_params, policy_state)
-        task_state, reward, done = step_fn(task_state, action)
+        action, policy_state     = action_fn(task_state, best_params, policy_state)
+        task_state, reward, done =   step_fn(task_state, action)
         screens.append(SlimeVolley.render(task_state))
 
     gif_file = os.path.join(log_dir, 'slimevolley.gif')
-    screens[0].save(gif_file, save_all=True, append_images=screens[1:],
-                    duration=40, loop=0)
+    screens[0].save(gif_file, save_all=True, append_images=screens[1:], duration=40, loop=0)
     logger.info('GIF saved to {}.'.format(gif_file))
 
 
