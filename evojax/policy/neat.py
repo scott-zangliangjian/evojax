@@ -48,7 +48,7 @@ class Genome:
 def initialize_population(population_size, input_dim, output_dim):
     population = []
     for _ in range(population_size):
-        nodes = [NodeGene(i, 'input') for i in range(input_dim)] + [NodeGene(input_dim + i, 'output') for i in range(output_dim)]
+        nodes       = [NodeGene(i, 'input') for i in range(input_dim)] + [NodeGene(input_dim + i, 'output') for i in range(output_dim)]
         connections = [ConnectionGene(i, random.randint(0, input_dim-1), input_dim + random.randint(0, output_dim-1), random.uniform(-1, 1)) for i in range(input_dim * output_dim)]
         genome = Genome(nodes, connections)
         population.append(genome)

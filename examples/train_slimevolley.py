@@ -83,7 +83,7 @@ def main(config):
     test_task  = SlimeVolley(test=True,  max_steps=max_steps)
     match config.police_type:
         case 'MLP':  policy =  MLPPolicy(input_dim=train_task.obs_shape[0], hidden_dims=[config.hidden_size, ], output_dim=train_task.act_shape[0], output_act_fn='tanh', )
-        case 'NEAT': policy = NEATPolicy(input_dim=train_task.obs_shape[0],                                     output_dim=train_task.act_shape[0],                       )
+        case 'NEAT': policy = NEATPolicy(input_dim=train_task.obs_shape[0],                                     output_dim=train_task.act_shape[0],                       population_size=config.pop_size, )
         case _:      sys.exit("unsupported policy type: {}".format(config.police_type))
 
     match config.police_type:
@@ -97,12 +97,12 @@ def main(config):
         solver=solver,
         train_task=train_task,
         test_task=test_task,
-        max_iter=config.max_iter,
-        log_interval=config.log_interval,
+        max_iter     =config.max_iter,
+        log_interval =config.log_interval,
         test_interval=config.test_interval,
-        n_repeats=config.n_repeats,
+        n_repeats    =config.n_repeats,
         n_evaluations=config.num_tests,
-        seed=config.seed,
+        seed         =config.seed,
         log_dir=log_dir,
         logger=logger,
     )
