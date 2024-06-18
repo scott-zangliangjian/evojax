@@ -83,7 +83,7 @@ def main(config):
     test_task  = SlimeVolley(test=True,  max_steps=max_steps)
     match config.police_type:
         case 'MLP':  policy =  MLPPolicy(input_dim=train_task.obs_shape[0], hidden_dims=[config.hidden_size, ], output_dim=train_task.act_shape[0], output_act_fn='tanh', )
-        case 'NEAT': policy = NEATPolicy(input_dim=train_task.obs_shape[0], hidden_dims=[config.hidden_size, ], output_dim=train_task.act_shape[0], output_act_fn='tanh', )
+        case 'NEAT': policy = NEATPolicy(input_dim=train_task.obs_shape[0],                                     output_dim=train_task.act_shape[0],                       )
         case _:      sys.exit("unsupported policy type: {}".format(config.police_type))
 
     match config.police_type:
