@@ -43,7 +43,8 @@ import shutil
 import jax
 
 from evojax.task.slimevolley import SlimeVolley
-from evojax.policy.mlp import MLPPolicy
+from evojax.policy.mlp  import  MLPPolicy
+from evojax.policy.neat import NEATPolicy
 from evojax.algo import CMA
 from evojax import Trainer
 from evojax import util
