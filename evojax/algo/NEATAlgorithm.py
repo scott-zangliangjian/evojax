@@ -31,6 +31,7 @@ import jax.numpy as jnp
 from evojax.algo.base import NEAlgorithm
 from evojax.util import create_logger
 
+from typing import List
 
 # Helper classes and functions (NodeGene, ConnectionGene, Genome, initialize_population, select_and_breed, etc.)
 
